@@ -1,0 +1,830 @@
+/*=============== GOOGLE FONTS ===============*/
+@import url("https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@400;500&display=swap");
+
+/*=============== VARIABLES CSS ===============*/
+:root {
+  --header-height: 3.2rem;
+
+  /*========== Colors ==========*/
+  /*Color mode HSL(hue, saturation, lightness)*/
+  --white-color: hsl(0, 0%, 100%);
+  --black-color: hsl(0, 0%, 0%);
+
+  /*========== Font and typography ==========*/
+  /*.5rem = 8px | 1rem = 16px ...*/
+  --body-font:  sans-serif;
+  --h1-font-size: 1.5rem;
+  --normal-font-size: .938rem;
+
+  /*========== Font weight ==========*/
+  --font-regular: 400;
+  --font-medium: 500;
+
+  /*========== z index ==========*/
+  --z-tooltip: 10;
+  --z-fixed: 100;
+}
+
+/*========== Responsive typography ==========*/
+@media screen and (min-width: 1150px) {
+  :root {
+    --normal-font-size: 1rem;
+  }
+}
+
+/*=============== BASE ===============*/
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--body-font);
+  font-size: var(--normal-font-size);
+  background-color: var(--white-color);
+}
+
+ul {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+/*=============== REUSABLE CSS CLASSES ===============*/
+.container {
+  max-width: 1120px;
+  margin-inline: 1.5rem;
+}
+
+/*=============== HEADER & NAV ===============*/
+.header {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  background-color: var(--black-color);
+  z-index: var(--z-fixed);
+}
+
+.nav {
+  position: relative;
+  height: var(--header-height);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav__logo {
+  color: var(--white-color);
+  font-weight: var(--font-medium);
+}
+
+.nav__close, 
+.nav__toggle {
+  display: flex;
+  color: var(--white-color);
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+/* Navigation for mobile devices */
+@media screen and (max-width: 1150px) {
+  .nav__menu {
+    position: fixed;
+    left: -100%;
+    top: 0;
+    background-color: var(--black-color);
+    width: 100%;
+    height: 100%;
+    padding: 6rem 3.5rem 4.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: left .4s;
+  }
+
+  .nav__item {
+    transform: translateX(-150px);
+    visibility: hidden;
+    transition: transform .4s ease-out, visibility .4s;
+  }
+
+  .nav__item:nth-child(1) {
+    transition-delay: .1s;
+  }
+  .nav__item:nth-child(2) {
+    transition-delay: .2s;
+  }
+  .nav__item:nth-child(3) {
+    transition-delay: .3s;
+  }
+  .nav__item:nth-child(4) {
+    transition-delay: .4s;
+  }
+  .nav__item:nth-child(5) {
+    transition-delay: .5s;
+  }
+}
+
+.nav__list, 
+.nav__social {
+  display: flex;
+}
+
+.nav__list {
+  flex-direction: column;
+  row-gap: 3rem;
+}
+
+.nav__link {
+  position: relative;
+  color: var(--white-color);
+  font-size: var(--h1-font-size);
+  font-weight: var(--font-medium);
+  display: inline-flex;
+  align-items: center;
+  transition: opacity .4s;
+}
+
+.nav__link i {
+  font-size: 2rem;
+  position: absolute;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .4s, visibility .4s;
+}
+
+.nav__link span {
+  position: relative;
+  transition: margin .4s;
+}
+
+.nav__link span::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 0;
+  height: 2px;
+  background-color: var(--white-color);
+  transition: width .4s ease-out;
+}
+
+/* Animation link on hover */
+.nav__link:hover span {
+  margin-left: 2.5rem;
+}
+
+.nav__link:hover i {
+  opacity: 1;
+  visibility: visible;
+}
+
+.nav__link:hover span::after {
+  width: 100%;
+}
+
+/* Sibling fade animation */
+.nav__list:has(.nav__link:hover) .nav__link:not(:hover) {
+  opacity: .4;
+}
+
+.nav__close {
+  position: absolute;
+  top: 1rem;
+  right: 1.5rem;
+}
+
+.nav__social {
+  column-gap: 1rem;
+}
+
+.nav__social-link {
+  color: var(--white-color);
+  font-size: 1.5rem;
+  transition: transform .4s;
+}
+
+.nav__social-link:hover {
+  transform: translateY(-.25rem);
+}
+
+/* Show menu */
+.show-menu {
+  left: 0;
+}
+
+/* Animation link when displaying menu */
+.show-menu .nav__item {
+  visibility: visible;
+  transform: translateX(0);
+}
+
+/*=============== BREAKPOINTS ===============*/
+/* For large devices */
+@media screen and (min-width: 1150px) {
+  .container {
+    margin-inline: auto;
+  }
+
+  .nav {
+    height: calc(var(--header-height) + 2rem);
+  }
+
+  .nav__toggle, 
+  .nav__close {
+    display: none;
+  }
+
+  .nav__link {
+    font-size: var(--normal-font-size);
+  }
+
+  .nav__link i {
+    font-size: 1.5rem;
+  }
+
+  .nav__list {
+    flex-direction: row;
+    column-gap: 3.5rem;
+  }
+
+  .nav__menu {
+    display: flex;
+    align-items: center;
+    column-gap: 3.5rem;
+  }
+}
+
+
+/* ___________________________________________________________________________ */
+
+/* header - 2 */
+
+
+/* Heading */
+.head_2 {
+  background-color: #000000;
+  box-shadow: 0 8px 15rem rgb(0, 0, 0);
+  padding-top: 4rem;
+}
+
+.head_2 .heading {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 2rem;
+  align-items: center;
+  flex-wrap: wrap;  /* Added to handle wrapping on smaller screens */
+}
+
+.head_2 .heading .hd {
+  width: 22rem;
+  color: aliceblue;
+  font-size: 1.1rem;
+  padding-top: 1rem;
+}
+
+.head_2 .heading .hd p {
+  font-family: sans-serif;
+}
+
+.head_2 .heading .hd:hover {
+  margin-left: 4rem;
+}
+
+.head_2 .heading img {
+  max-width: 100%;
+  height: auto;
+  padding-bottom: 0rem;
+}
+
+.head_2 .heading a {
+  color: aliceblue;
+  margin-top: 12rem;
+  text-decoration: none;
+  text-align: center;
+}
+
+/* Responsive Styles */
+@media screen and (max-width: 768px) {
+  .head_2 .heading {
+    flex-direction: column; /* Stack items vertically */
+    padding: 1rem; /* Adjust padding */
+  }
+
+  .head_2 .heading .hd {
+    width: 100%; /* Ensure heading takes up full width on smaller screens */
+    font-size: 1rem; /* Adjust font size */
+    text-align: center; /* Center text */
+    padding-top: 0.5rem; /* Adjust padding */
+  }
+
+  .head_2 .heading img {
+    max-width: 90%; /* Adjust image width */
+    padding-bottom: 1.5rem; /* Adjust image padding */
+  }
+
+  .head_2 .heading a {
+    margin-top: 6rem; /* Reduce margin for smaller screens */
+    font-size: 1.2rem; /* Adjust font size for link */
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .head_2 .heading {
+    padding: 0.5rem; /* Reduce padding further */
+  }
+
+  .head_2 .heading .hd {
+    font-size: 0.9rem; /* Further reduce font size */
+    padding-top: 0.3rem; /* Reduce padding */
+  }
+
+  .head_2 .heading img {
+    max-width: 100%; /* Ensure image is fully responsive */
+    padding-bottom: 1rem; /* Reduce image padding */
+  }
+
+  .head_2 .heading a {
+    margin-top: 4rem; /* Further reduce margin for very small screens */
+    font-size: 1rem; /* Reduce font size of the link */
+  }
+}
+
+
+/* SEction Balveer Name */
+
+
+
+
+
+/* About Section */
+.about .all_about {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding: 2rem;
+}
+
+.about .all_about .me p {
+  font-size: 2.5rem;
+  transition: margin-left 1s ease-in 0.2s;
+}
+
+.about .all_about .me p:hover {
+  margin-left: 4rem;
+}
+
+.about .all_about .me h5 {
+  font-size: 1rem;
+  width: 20rem;
+  transition: margin-top 1s ease-in 0.2s;
+}
+
+.about .all_about .me h5:hover {
+  margin-top: 4rem;
+}
+
+/* Photo Section */
+.about .all_about .photo {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.about .all_about .photo img {
+  width: 22rem;
+  height: 27rem;
+  border: solid 3.5px white;
+  margin: 10px;
+  box-shadow: 0 0 10px 1px black;
+}
+
+.about .all_about .photo  :hover{
+  transform: scale(0.8);
+  z-index: 0.5 ;
+}
+
+/* Media Queries for Responsiveness */
+
+/* Tablet view (1024px and below) */
+@media (max-width: 1024px) {
+  .header .heading .hd {
+      font-size: 1.2rem;
+      width: auto;
+  }
+
+  .header .heading img {
+      width: 80%;
+  }
+
+  .Balveer .name h1 {
+      font-size: 12rem;
+  }
+
+  .about .all_about .me p {
+      font-size: 2rem;
+  }
+
+  .about .all_about .photo img {
+      width: 18rem;
+      height: 22rem;
+  }
+}
+
+/* Mobile view (768px and below) */
+@media (max-width: 768px) {
+  .header .heading {
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem;
+  }
+
+  .header .heading img {
+      width: 90%;
+  }
+
+  .Balveer .name h1 {
+      font-size: 10rem;
+  }
+
+  .about .all_about {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+  }
+
+  .about .all_about .me p {
+      font-size: 1.8rem;
+      padding: 0 1rem;
+  }
+
+  .about .all_about .me h5 {
+      font-size: 1.2rem;
+      width: auto;
+  }
+
+  .about .all_about .photo {
+      flex-direction: column;
+      align-items: center;
+  }
+
+  .about .all_about .photo img {
+      width: 18rem;
+      height: 22rem;
+  }
+}
+
+/* Small mobile view (480px and below) */
+@media (max-width: 480px) {
+  .header .heading .hd {
+      font-size: 1rem;
+  }
+
+  .Balveer .name h1 {
+      font-size: 8rem;
+  }
+
+  .about .all_about .me p {
+      font-size: 1.5rem;
+  }
+
+  .about .all_about .photo img {
+      width: 15rem;
+      height: 18rem;
+  }
+
+  .header nav ul {
+      text-align: center;
+      padding: 0;
+  }
+
+  .header nav li {
+      display: block;
+      padding: 1rem;
+  }
+
+  .header nav li a {
+      font-size: 1.2rem;
+  }
+}
+
+
+/*                                                  section -3  */
+/* Main section layout */
+.services {
+  padding: 3rem;
+  padding-bottom: 0%;
+}
+
+.services .all_ser {
+  display: flex; 
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: space-between; /* Ensures even distribution */
+}
+
+/* Left side content (Head) */
+.services .all_ser .head {
+  flex: 1 1 45%; /* 45% of available width for larger screens */
+  max-width: 45%; /* Restricting the max width */
+}
+
+.services .all_ser .head h3 {
+  font-size: 2rem;
+  padding-bottom: 1rem;
+}
+
+.services .all_ser .head p {
+  margin-right: 3rem;
+}
+
+/* Right side content (Accordion) */
+.accordion {
+  flex: 1 1 45%; /* 45% of available width for larger screens */
+  max-width: 45%; /* Restricting max width */
+  border-radius: 5px;
+  padding: 2rem;
+  border: 1px solid #ddd;
+}
+
+/* Accordion Item Styling */
+.accordion-item {
+  margin-bottom: 10px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+/* Accordion Header */
+.accordion-header {
+  padding: 15px;
+  background-color: #f0f0f0;
+}
+
+.accordion-header h3 {
+  margin: 0 0 5px;
+  font-size: 1.75rem;
+}
+
+.accordion-header p {
+  margin: 5px 0;
+  font-size: 14px;
+  color: #555;
+}
+
+/* Accordion Toggle Button */
+.accordion-toggle {
+  width: 100%;
+  padding: 15px;
+  background-color: #122e4b;
+  color: white;
+  font-size: 17px;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+}
+
+/* Accordion Content Styling */
+.accordion-content {
+  padding: 15px;
+  background-color: #fff;
+  display: none;
+  border-top: 1px solid #ddd;
+}
+
+/* Tablet and Small Screen Devices */
+@media (max-width: 1024px) {
+  .services .all_ser {
+    flex-direction: column; /* Stack elements vertically */
+    padding: 2rem;
+    align-items: center;
+  }
+
+  .services .all_ser .head,
+  .accordion {
+    max-width: 100%; /* Full width for both sections */
+  }
+
+  .accordion-toggle {
+    font-size: 16px;
+  }
+
+  .accordion-content {
+    font-size: 14px;
+  }
+}
+
+/* Mobile Devices */
+@media (max-width: 768px) {
+  .services .all_ser {
+    padding: 1.5rem;
+  }
+
+  .accordion-toggle {
+    font-size: 14px;
+  }
+
+  .accordion-content {
+    font-size: 12px;
+  }
+
+  .accordion-header h3 {
+    font-size: 1.5rem;
+  }
+}
+
+/* Extra Small Screens */
+@media (max-width: 480px) {
+  .services .all_ser {
+    padding: 1rem;
+  }
+
+  .accordion {
+    padding: 1rem;
+  }
+
+  .accordion-toggle {
+    font-size: 13px;
+    padding: 12px;
+  }
+
+  .accordion-content {
+    font-size: 11px;
+  }
+
+  .accordion-header h3 {
+    font-size: 1.3rem;
+  }
+}
+
+
+
+/*                                              section-4 */
+.head_4 {
+  padding: 3rem;
+  padding-top: 0%;
+}
+
+.head_4 .project {
+  display: flex; /* Enables the side-by-side layout */
+  align-items: center; /* Vertically aligns the content */
+  justify-content: space-between; /* Ensures the two sections are spaced out */
+  flex-wrap: wrap; /* Allows wrapping for small screens */
+}
+
+.head_4 .project .year {
+  font-size: 2rem;
+  flex: 1; /* Allows the year to take up as much space as needed */
+  text-align: center; /* Center text in the year section */
+}
+
+.head_4 .project .explain {
+  flex: 2; /* Takes up more space for the explanation */
+  text-align: right; /* Left-align the text for the explanation */
+  margin-left: 2rem; /* Adds some spacing between year and explanation */
+}
+
+.head_4 .project .explain h3 {
+  font-size: 2rem;
+}
+
+.head_4 .project .explain p {
+  font-size: 1.1rem;
+}
+
+/* Tablet and small screens */
+@media (max-width: 1024px) {
+  .head_4 .project {
+    flex-direction: column; /* Stacks the year and explanation vertically */
+    text-align: center; /* Centers the text on small screens */
+  }
+
+  .head_4 .project .year {
+    margin-bottom: 1rem; /* Adds space between year and explanation */
+  }
+
+  .head_4 .project .explain {
+    margin-left: 0; /* Removes left margin when stacked */
+    text-align: center; /* Centers the explanation text */
+  }
+
+  .head_4 .project .explain p {
+    padding-left: 0; /* Removes unnecessary padding */
+    font-size: 1rem; /* Adjusts font size for better readability */
+  }
+}
+
+/* Mobile Devices */
+@media (max-width: 768px) {
+  .head_4 .project .year {
+    font-size: 1.5rem; /* Decreases the font size for small screens */
+  }
+
+  .head_4 .project .explain h3 {
+    font-size: 1.8rem; /* Adjusts heading size for smaller screens */
+  }
+
+  .head_4 .project .explain p {
+    font-size: 0.9rem; /* Further reduces font size for mobile readability */
+  }
+}
+
+/* Extra Small Screens */
+@media (max-width: 480px) {
+  .head_4 .project .year {
+    font-size: 1.2rem; /* Smaller font size for extra small screens */
+  }
+
+  .head_4 .project .explain h3 {
+    font-size: 1.6rem; /* Adjusts heading size even more */
+  }
+
+  .head_4 .project .explain p {
+    font-size: 0.85rem; /* Makes the paragraph font smaller */
+  }
+}
+
+
+/* project pic */
+/* Container to center the image */
+/* Ensures the parent container is set to 100% height */
+/* Parent container that ensures center alignment of the .pic */
+.parent-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;  /* Take up the full viewport height */
+  width: 100%;    /* Full width */
+}
+
+/* Container to center the image */
+.pic {
+  display: flex;               /* Enables flexbox */
+  justify-content: center;     /* Centers the content horizontally */
+  align-items: center;         /* Centers the content vertically */
+  width: 70%;                  /* 70% width */
+  height: 70%;                 /* 70% height */
+  box-sizing: border-box;      /* Ensures padding is included in the width/height */
+  padding: 20px;               /* Optional padding around the image */
+  overflow: hidden;            /* Prevents overflow of shadow */
+}
+
+/* Style for anchor link */
+.pic a {
+  display: block;              /* Make <a> tag a block element */
+  width: 100%;                 /* Ensure the anchor tag takes up the full width of .pic */
+  height: 100%;                /* Ensure the anchor tag takes up the full height of .pic */
+  overflow: hidden;            /* Prevents shadow from overflowing */
+  position: relative;          /* Necessary for hover shadow positioning */
+  border: 4px solid black;     /* Border around the image */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
+}
+
+/* Image styling */
+.pic a img {
+  width: 100%;                 /* Make the image take up 100% of the container */
+  height: auto;                /* Maintain aspect ratio */
+  display: block;              /* Remove any space below the image */
+  transition: transform 0.3s ease; /* Smooth zoom-in transition */
+}
+
+/* Hover effect for image and shadow */
+.pic a:hover {
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.7); /* Black shadow on hover */
+}
+
+.pic a:hover img {
+  transform: scale(1.05);      /* Slight zoom effect on hover */
+}
+
+/* Optional: make sure it's responsive on smaller screens */
+@media (max-width: 768px) {
+  .pic {
+    padding: 10px; /* Reduce padding on smaller screens */
+  }
+}
+
+@media (max-width: 480px) {
+  .pic {
+    padding: 5px;  /* Further reduce padding on very small screens */
+  }
+}
+
+
+
+/*                                            section _5 */
+
+
+
+                                                      /* footer  */
+
+/* Footer container */
